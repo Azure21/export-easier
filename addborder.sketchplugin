@@ -1,0 +1,35 @@
+(function() {
+	var doc = context.document;
+	var app = [NSApplication sharedApplication];
+
+	var artboards = [[doc currentPage] artboards];
+
+
+	if (artboards.count() == 0) {	
+    	[app displayDialog:"There is no artboard on current page"];
+    	return;
+	} else {
+    	for(var i = 0; i < artboards.count();i++ ){
+        	var artboard = artboards[i];
+        	var frame = [artboard frame];
+        	var x = [frame x];
+        	var y = [frame y];
+  			var height = artboard.rect().size.height;
+  			var width = artboard.rect().size.width;
+
+  			var borderLayer = [artboard addLayerOfType:"rectangle"];
+  			[borderLayer setName:"borderLayer"+i];
+  			
+  			var borderLayerFrame = [borderLayer frame];
+  			[borderLayerFrame setWidth:width];
+  			[borderLayerFrame setHeight:height];
+  		
+  			var style = [borderLayer style];
+			[[style borders] addNewStylePart];
+			[[style border] setThickness:1];
+        	[[style border] setPosition:1];
+        }
+
+        return;
+	}
+})();
